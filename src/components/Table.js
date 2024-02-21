@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
@@ -44,9 +44,17 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-const Table = React.memo(({ rows, columns }) => {
+const Table = React.memo(({ rows, columns, totalCount, onPageChange }) => {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState({});
+  const [paginationModel, setPaginationModel] = useState({
+    pageSize: 100,
+    page: 0,
+  });
+  
+  useEffect(() => {
+    onPageChange(paginationModel);
+  }, [paginationModel]);
 
   const handleRowClick = async (params) => {
     let userName = params?.row?.login;
@@ -100,6 +108,10 @@ const Table = React.memo(({ rows, columns }) => {
             params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
           }
           onRowClick={handleRowClick}
+          rowCount={totalCount}
+          paginationMode="server"
+          pageSizeOptions={[25, 50, 100]}
+          onPaginationModelChange={setPaginationModel}
         />
       </Box>
       <Dialog open={open} onClose={handleClose}>

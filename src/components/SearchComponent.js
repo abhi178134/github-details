@@ -1,13 +1,11 @@
 // SearchComponent.js
-import React, { useState } from "react";
+import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 
-const SearchComponent = ({ onSearch }) => {
-  const [searchText, setSearchText] = useState("");
-
-  const handleSearch = async () => {
-    onSearch(searchText);
+const SearchComponent = ({ onSearch, searchText, setSearchText }) => {
+  const handleSearch = async (text) => {
+    if (text && text !== "") onSearch(text);
   };
 
   const debounce = (func, delay) => {
