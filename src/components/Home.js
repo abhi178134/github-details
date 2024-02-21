@@ -30,7 +30,7 @@ export const Home = () => {
     };
 
     let reqOptions = {
-      url: `https://api.github.com/search/users?q=${searchText}+repos:%3E4+followers:%3E10`,
+      url: `https://api.github.com/search/users?q=${searchText}&sort=followers&per_page=100`,
       method: "GET",
       headers: headersList,
     };
